@@ -4,7 +4,7 @@
   "description": "Microservice collecting messages through websocket clients and redirecting them through a MQTT queue.",
   "license": "Apache-2.0",
   "dependencies": {
-    "authenticatedws": "/usr/src/demo/authenticatedws",
+    "authenticatedws": "../authenticatedws",
     "config": "^1.21.0",
     "js-yaml": "^3.6.1",
     "log4js": "^0.6.38",
