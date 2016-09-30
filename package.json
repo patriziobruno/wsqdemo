@@ -10,7 +10,7 @@
     "should": "^11.1.0"
   },
   "scripts": {
-    "test": "test.sh",
+    "test": "mocha -t 10000",
     "initialize": "install-modules.sh"
   }
 }
