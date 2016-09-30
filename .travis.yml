@@ -4,8 +4,7 @@ node_js:
   - "5"
 
 env:
-  - CXX=clang
-  - PATH=$PATH:.
+  - CXX=clang PATH=$PATH:.
 
 addons:
   apt:
@@ -38,7 +37,6 @@ before_install:
 
 script:
   - chmod +x test.sh
-  - export PATH=$PATH:.
   - npm run test
 
 cache:
