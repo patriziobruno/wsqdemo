@@ -34,7 +34,6 @@ before_install:
   - npm --version
   - gcc --version
   - chmod +x install-modules.sh
-  - npm run initialize
 
 script:
   - chmod +x test.sh

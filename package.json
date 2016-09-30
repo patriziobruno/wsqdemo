@@ -11,6 +11,6 @@
   },
   "scripts": {
     "test": "test.sh",
-    "initialize": "install-modules.sh"
+    "postinstall": "install-modules.sh"
   }
 }
