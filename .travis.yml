@@ -38,6 +38,7 @@ before_install:
 
 script:
   - chmod +x test.sh
+  - export PATH=$PATH:.
   - npm run test
 
 cache:
