@@ -1,0 +1,12 @@
+{
+  "name": "dispatcher",
+  "version": "0.0.1",
+  "description": "Very simple test client for the collector microservice. Open a websocket to the collector and start sending a message every 150ms.",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "authenticatedws": "../authenticatedws",
+    "config": "^1.21.0",
+    "js-yaml": "^3.6.1"
+  },
+  "bin": "index.js"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "broker",
+  "version": "0.0.1",
+  "description": "MOSCA runner",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "config": "^1.21.0",
+    "js-yaml": "^3.6.1",
+    "log4js": "^0.6.38",
+    "mosca": "^2.1.0"
+  },
+  "bin": "broker.js"
+}

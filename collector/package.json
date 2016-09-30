@@ -1,0 +1,14 @@
+{
+  "name": "collector",
+  "version": "0.0.1",
+  "description": "Microservice collecting messages through websocket clients and redirecting them through a MQTT queue.",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "authenticatedws": "../authenticatedws",
+    "config": "^1.21.0",
+    "js-yaml": "^3.6.1",
+    "log4js": "^0.6.38",
+    "mqtt": "^2.0.0"
+  },
+  "bin": "index.js"
+}

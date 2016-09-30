@@ -1,0 +1,6 @@
+aws:
+  port: 8080
+  host: localhost
+  username: test
+  password: test
+  secret: false

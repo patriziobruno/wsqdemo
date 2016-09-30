@@ -1,0 +1,6 @@
+aws:
+  port: 8080
+  jwtsecret: pbruno4democoll
+mqtt:
+  url: mqtt://localhost
+  topic: demoqueue
