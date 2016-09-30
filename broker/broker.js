@@ -42,4 +42,3 @@ server.on('ready', setup);
 function setup() {
     logger.log(l4js.INFO, 'Mosca server is up and running');
 }
-

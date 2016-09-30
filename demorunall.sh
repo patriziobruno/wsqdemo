@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-mongod --fork --logpath /var/log
+mongod --fork --logpath /var/log/mongodb/server.log
 
 nohup /usr/bin/broker > /var/log/broker.log 2>&1 &
 BPID=$!
@@ -14,6 +14,6 @@ echo $CPID > /var/run/collector.pid
 
 sleep 2
 
-nohup /usr/bin/dispatcher > /var/log/dispatcher.log 2>&1 &
+nohup /usr/bin/dispatcher > /var/log/dispatcher.log 2>&1
 DPID=$!
 echo $DPID > /var/run/dispatcher.pid

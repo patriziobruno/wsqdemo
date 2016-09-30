@@ -1,6 +1,6 @@
-#!/bin/sh
-npm install /usr/src/demo/broker
-npm install /usr/src/demo/collector
-npm install /usr/src/demo/dispatcher
-cp /usr/src/demo/demorunall.sh /usr/bin
-chmod +x /usr/bin/demorunall.sh
+#!/usr/bin/env sh
+cp -R /usr/src/demo/authenticatedws /usr/src/
+npm install --global /usr/src/demo/authenticatedws
+npm install --global /usr/src/demo/broker
+npm install --global /usr/src/demo/collector
+npm install --global /usr/src/demo/dispatcher

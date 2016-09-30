@@ -7,5 +7,6 @@
     "authenticatedws": "../authenticatedws",
     "config": "^1.21.0",
     "js-yaml": "^3.6.1"
-  }
+  },
+  "bin": "app.js"
 }
