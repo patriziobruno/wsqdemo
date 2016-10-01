@@ -34,10 +34,14 @@ before_install:
   - npm --version
   - gcc --version
   - chmod +x install-modules.sh
+  - npm install coveralls
 
 script:
   - chmod +x test.sh
-  - npm run test
+  - npm run coverage
+
+after_success:
+  - npm run coveralls
 
 cache:
   directories:

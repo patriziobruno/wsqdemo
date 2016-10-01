@@ -1,16 +1,23 @@
 {
   "name": "demo-test",
-  "description" : "Suite of microservices and clients to broadcast messages using MQTT and websockets.",
+  "description": "Suite of microservices and clients to broadcast messages using MQTT and websockets.",
   "version": "0.0.1",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/patriziobruno/wsqdemo.git"
+  },
   "devDependencies": {
     "coveralls": "^2.11.14",
     "mocha": "^3.1.0",
     "mockery": "^1.7.0",
+    "nyc": "^8.3.0",
     "should": "^11.1.0"
   },
   "scripts": {
     "test": "test.sh",
-    "postinstall": "install-modules.sh"
+    "postinstall": "install-modules.sh",
+    "coverage": "nyc npm test",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
   }
 }

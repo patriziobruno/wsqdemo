@@ -57,7 +57,7 @@ class AuthenticatedWebSocketClient extends EventEmitter {
                     that.emit('close');
                 });
 
-                that.ws.on('error', (erro) => {
+                that.ws.on('error', (error) => {
                     that.emit('error', error);
                 });
             } else {
@@ -67,7 +67,7 @@ class AuthenticatedWebSocketClient extends EventEmitter {
         }).on('requestTimeout', (req) => {
             req.abort();
             that.emit('error', new Error('request timeout'));
-        }).on('responseTimeout', (res) => {
+        }).on('responseTimeout', () => {
             that.emit('error', new Error('response timeout'));
         }).on('error', (err) => {
             that.emit('error', err);

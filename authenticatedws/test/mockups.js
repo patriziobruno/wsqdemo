@@ -9,57 +9,67 @@ var jwt = require('jsonwebtoken');
  * The constructor simulates a successfull connection accept and a message event.
  */
 class wsServer extends EventEmitter {
-    constructor() {
-        super();
-        var that = this;
+  constructor() {
+    super();
+    var that = this;
 
-        // this is required by AuthenticatedWebSocketServer.broadcast
-        that.clients = [];
-        that.clients.push(new ws());
+    // this is required by AuthenticatedWebSocketServer.broadcast
+    that.clients = [];
+    that.clients.push(new ws());
 
-        // a timeout will give the test script some time to register event handlers and simulates IO
-        setTimeout(() => {
-            var socket = new ws();
-            that.emit('connection', socket);
-            setTimeout(()=> {
-                socket.emit('message', 'test');
-            }, 200);
-        }, 100);
-    }
+    // a timeout will give the test script some time to register event handlers and simulates IO
+    setTimeout(() => {
+      var socket = new ws();
+      that.emit('connection', socket);
+      setTimeout(()=> {
+        socket.emit('message', 'test');
+      }, 200);
+    }, 100);
+  }
 }
 
 /**
  * A mockup class for WebSocket (npmjs.com/package/ws). The constructor simulates a successfull connection open.
  */
 class ws extends EventEmitter {
-    constructor() {
-        super();
-        // a timeout will give the test script some time to register event handlers and simulates IO
-        setTimeout(()=> {
-            this.emit('open', {});
-        }, 500);
+  constructor(url) {
+    super();
+    // a timeout will give the test script some time to register event handlers and simulates IO
+    setTimeout(()=> {
+      this.emit('open', {});
+    }, 500);
+
+    if(url && url.indexOf('message_expected') > -1) {
+      setTimeout(()=>{
+        this.emit('message', '"message"');
+      }, 600);
     }
 
-    /**
-     * Calls testData.done with message as parameter
-     * @param message {String} message
-     * @param callback {ws~sendCallback} called to report errors
-     */
-    send(message, callback) {
-            if (testData && typeof testData.done == 'function') {
-                setTimeout(()=> {
-                    try {
-                        testData.done(message);
-                    } catch(e) {
-                        callback.call(this, e);
-                    }
-                }, 1);
-            }
-    }
+    setTimeout(()=> {
+      this.emit('close', {});
+    }, 650);
+  }
 
-    static get Server() {
-        return wsServer;
+  /**
+   * Calls testData.done with message as parameter
+   * @param message {String} message
+   * @param callback {ws~sendCallback} called to report errors
+   */
+  send(message, callback) {
+    if (testData && typeof testData.done == 'function') {
+      setTimeout(()=> {
+        try {
+          testData.done(message);
+        } catch (e) {
+          callback.call(this, e);
+        }
+      }, 1);
     }
+  }
+
+  static get Server() {
+    return wsServer;
+  }
 }
 
 /**
@@ -71,32 +81,51 @@ class ws extends EventEmitter {
 /**
  * A mockup class for npmjs.com/package/node-rest-client.
  */
-class node_rest_client {
-    /**
-     * Used by AuthenticatedWebSocketClient for the authentication
-     * phase. If the body contains a valid username/password pair (test/test), it calls the callback gets called
-     * with a JWT token as first parameter and a status 200 (OK) as second parameter
-     * @param url {String} ignored
-     * @param body {Object} contains user credentials: username and password
-     * @param callback {node_rest_client~postCallback} called to report completion of the call
-     */
-    post(url, body, callback) {
-
-        // a timeout will give the test script some time to register event handlers and simulates IO
-        setTimeout(()=> {
-            if (body.username == 'test' && body.username == 'test') {
-                callback(jwt.sign({username: body.username}, 'pbruno4demo'), {
-                    statusCode: 200
-                    , statusMessage: 'OK'
-                });
-            } else {
-                callback(null, {statusCode: 401, statusMessage: 'unauthorized'});
-            }
-        }, 100);
-
-        return new EventEmitter();
+class node_rest_client extends EventEmitter {
+  /**
+   * Used by AuthenticatedWebSocketClient for the authentication
+   * phase. If the body contains a valid username/password pair (test/test), it calls the callback gets called
+   * with a JWT token as first parameter and a status 200 (OK) as second parameter
+   * @param url {String} ignored
+   * @param body {Object} contains user credentials: username and password
+   * @param callback {node_rest_client~postCallback} called to report completion of the call
+   */
+  post(url, body, callback) {
+    var that = this;
+    if (url == 'http://request_timeout_expected:8080/login') {
+      setTimeout(()=> {
+        that.emit('requestTimeout', {
+          abort: function () {
+          }
+        });
+      }, 100);
+    } else if (url == 'http://response_timeout_expected:8080/login') {
+      setTimeout(()=> {
+        that.emit('responseTimeout');
+      }, 100);
+    } else if (url == 'http://error_expected:8080/login') {
+      setTimeout(()=> {
+        that.emit('error', new Error('error'));
+      }, 100);
+    } else {
+      // a timeout will give the test script some time to register event handlers and simulates IO
+      setTimeout(()=> {
+        if (body.username == 'test' && body.username == 'test') {
+          callback(jwt.sign({username: body.username}, 'pbruno4demo'), {
+            statusCode: 200
+            , statusMessage: 'OK'
+          });
+        } else {
+          callback(null, {statusCode: 401, statusMessage: 'unauthorized'});
+        }
+      }, 100);
     }
+
+    return this;
+  }
 }
+
+module.exports.node_rest_client = node_rest_client;
 
 /**
  * This callback gets called with a result and a HTTP response as parameters when a REST POST request completes.
@@ -109,34 +138,34 @@ class node_rest_client {
  * A mockup object for NodeJS' http and https modules.
  */
 var http = {
-    /**
-     * Mocks http.createServer, returning an object containing the only listen function
-     * @returns {{listen: listen}}
-     */
-    createServer: function () {
-        return {
-            /**
-             * Fakes httpServer.listen
-             * @param port {Number} ignored
-             * @param cb {http~serverListenCallback} called after a few milliseconds
-             */
-            listen: function (port, cb) {
-                // a timeout will give the test script some time to register event handlers and simulates IO
-                setTimeout(cb, 10);
-            }
-        };
-    }
+  /**
+   * Mocks http.createServer, returning an object containing the only listen function
+   * @returns {{listen: listen}}
+   */
+  createServer: function () {
+    return {
+      /**
+       * Fakes httpServer.listen
+       * @param port {Number} ignored
+       * @param cb {http~serverListenCallback} called after a few milliseconds
+       */
+      listen: function (port, cb) {
+        // a timeout will give the test script some time to register event handlers and simulates IO
+        setTimeout(cb, 10);
+      }
+    };
+  }
 
-    /**
-     * needed by express (npmjs.com/package/express)
-     */
-    , IncomingMessage: function () {
-    }
-    /**
-     * needed by express (npmjs.com/package/express)
-     */
-    , ServerResponse: function () {
-    }
+  /**
+   * needed by express (npmjs.com/package/express)
+   */
+  , IncomingMessage: function () {
+  }
+  /**
+   * needed by express (npmjs.com/package/express)
+   */
+  , ServerResponse: function () {
+  }
 };
 
 /**
@@ -146,9 +175,9 @@ var http = {
 
 // enable mockups
 mockery.enable({
-    warnOnReplace: false
-    , warnOnUnregistered: false
-    , useCleanCache: true
+  warnOnReplace: false
+  , warnOnUnregistered: false
+  , useCleanCache: true
 });
 
 mockery.registerMock('ws', ws);
@@ -165,10 +194,10 @@ var testData;
  * (Re)Initialize test data.
  */
 function initTestData() {
-    module.exports.testData = testData = {
-        done: function () {
-        }
-    };
+  module.exports.testData = testData = {
+    done: function () {
+    }
+  };
 }
 
 
