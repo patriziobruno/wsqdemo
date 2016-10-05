@@ -5,7 +5,7 @@ node_js:
   - "4"
 
 env:
-  - CXX=clang PATH=$PATH:.
+  - CXX=clang
 
 addons:
   apt:
