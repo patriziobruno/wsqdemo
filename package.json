@@ -15,8 +15,8 @@
     "should": "^11.1.0"
   },
   "scripts": {
-    "test": "test.sh",
-    "postinstall": "install-modules.sh",
+    "test": "PATH=$PATH:. test.sh",
+    "postinstall": "PATH=$PATH:. install-modules.sh",
     "coverage": "nyc npm test",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   }
