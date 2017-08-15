@@ -9,7 +9,7 @@ function getConfig() {
     return {
         aws: {
             secret: config.has('aws.jwtsecret') ? config.get('aws.jwtsecret') : 'pbruno4demo'
-            , port: config.has('aws.port') ? config.get('aws.port') : 8081
+            , port: config.has('aws.port') ? config.get('aws.port') : 8082
         }
         , mqtt: {
             url: config.has('mqtt.url') ? config.get('mqtt.url') : 'mqtt://localhost'

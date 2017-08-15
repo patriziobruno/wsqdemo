@@ -28,7 +28,7 @@ class AuthenticatedWebSocketClient extends EventEmitter {
             , username = options.username || 'test'
             , password = options.password || 'test'
             , host = options.host || 'localhost'
-            , port = options.port || 8080
+            , port = options.port || 8081
             , secure = options.secure || false
             , purl = `${secure ? 's' : ''}://${host}:${port}`
             , that = this;
@@ -84,3 +84,4 @@ class AuthenticatedWebSocketClient extends EventEmitter {
 }
 
 module.exports = AuthenticatedWebSocketClient;
+

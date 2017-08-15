@@ -1,5 +1,5 @@
 aws:
-  port: 8081
+  port: 8082
   jwtsecret: pbruno4demodisp
 mqtt:
   url: mqtt://localhost

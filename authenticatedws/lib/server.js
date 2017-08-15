@@ -13,7 +13,7 @@ class AuthenticatedWebSocketServer extends EventEmitter {
             , jwt = require('jsonwebtoken')
             , bodyParser = require('body-parser')
             , secret = options.secret || "pbruno4demo"
-            , port = options.port || 8080
+            , port = options.port || 8081
             , secure = options.secure || false
             , that = this
             , http = require(secure ? 'https' : 'http')
@@ -92,3 +92,4 @@ class AuthenticatedWebSocketServer extends EventEmitter {
 }
 
 module.exports = AuthenticatedWebSocketServer;
+

@@ -7,7 +7,7 @@ var EventEmitter = require('events');
 class collector extends EventEmitter {
   constructor(options) {
     super();
-    options = options || {aws: {port: 8080}, mqtt: {topic: 'default'}};
+    options = options || {aws: {port: 8081}, mqtt: {topic: 'default'}};
 
     var aws = new authenticatedws.Server(options.aws)
       , client = mqtt.connect(options.mqtt)

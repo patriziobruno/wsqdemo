@@ -92,18 +92,18 @@ class node_rest_client extends EventEmitter {
    */
   post(url, body, callback) {
     var that = this;
-    if (url == 'http://request_timeout_expected:8080/login') {
+    if (url == 'http://request_timeout_expected:8081/login') {
       setTimeout(()=> {
         that.emit('requestTimeout', {
           abort: function () {
           }
         });
       }, 100);
-    } else if (url == 'http://response_timeout_expected:8080/login') {
+    } else if (url == 'http://response_timeout_expected:8081/login') {
       setTimeout(()=> {
         that.emit('responseTimeout');
       }, 100);
-    } else if (url == 'http://error_expected:8080/login') {
+    } else if (url == 'http://error_expected:8081/login') {
       setTimeout(()=> {
         that.emit('error', new Error('error'));
       }, 100);

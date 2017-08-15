@@ -30,6 +30,6 @@ ADD demorunall.sh /usr/bin
 RUN chmod +x /usr/bin/demorunall.sh
 RUN mkdir -p /data/db
 
-EXPOSE 8080 8081
+EXPOSE 8081 8082
 
 ENTRYPOINT ["/usr/bin/demorunall.sh"]

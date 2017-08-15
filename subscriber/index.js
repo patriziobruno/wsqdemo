@@ -9,7 +9,7 @@ class subscriber extends EventEmitter {
         super();
         var that = this;
 
-        options = options || {aws: {port: 8081}};
+        options = options || {aws: {port: 8082}};
 
         var aws = new authenticatedws.Client(options.aws);
         aws.connect();

@@ -4,7 +4,7 @@ var authenticatedws = require('authenticatedws');
 
 module.exports = function publisher(options) {
 
-    options = options || {aws: {port: 8080}};
+    options = options || {aws: {port: 8081}};
 
     var count = 0;
     var aws = new authenticatedws.Client(options.aws);
@@ -17,3 +17,4 @@ module.exports = function publisher(options) {
         }, 150);
     });
 };
+
