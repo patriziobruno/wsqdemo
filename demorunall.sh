@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+mkdir -p /var/log/mongodb
 mongod --fork --logpath /var/log/mongodb/server.log
 
 nohup /usr/bin/broker > /var/log/broker.log 2>&1 &
