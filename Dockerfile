@@ -19,11 +19,13 @@ COPY ./ /usr/src/demo
 
 RUN apt update && \
     #apk add make gcc g++ python git && \
-    npm install --unsafe-perm --production && \
-    apt remove --assume-yes make gcc g++ python git
+    npm install --unsafe-perm --production
 
 RUN chmod +x /usr/src/demo/install.sh
 RUN bash -c /usr/src/demo/install.sh
+RUN apt remove --assume-yes make gcc g++ python git
+RUN apt clean
+RUN apt autoremove --assume-yes
 ADD demorunall.sh /usr/bin
 RUN chmod +x /usr/bin/demorunall.sh
 RUN mkdir -p /data/db
